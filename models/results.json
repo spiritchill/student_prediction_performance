@@ -1,0 +1,30 @@
+{
+  "regression": {
+    "Linear Regression": {
+      "RMSE": 0.8635744432758169,
+      "MAE": 0.6799403943847986,
+      "R2": 0.9319198947968836
+    },
+    "Random Forest Regressor": {
+      "RMSE": 1.0034469454954942,
+      "MAE": 0.7943566932729282,
+      "R2": 0.908080112064733
+    }
+  },
+  "best_regressor": "Linear Regression",
+  "classification": {
+    "Logistic Regression": {
+      "Accuracy": 0.9611111111111111,
+      "Precision": 0.9634146341463414,
+      "Recall": 0.9937106918238994,
+      "F1": 0.978328173374613
+    },
+    "Random Forest Classifier": {
+      "Accuracy": 0.9833333333333333,
+      "Precision": 0.9814814814814815,
+      "Recall": 1.0,
+      "F1": 0.9906542056074766
+    }
+  },
+  "best_classifier": "Random Forest Classifier"
+}
