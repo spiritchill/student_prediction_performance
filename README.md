@@ -20,6 +20,9 @@ The schema mirrors the well-known UCI "Student Performance" dataset
 (e.g., more study time and fewer failures/absences raise grades; higher
 alcohol consumption and travel time lower them).
 
+##Working Site
+https://studentpredictionperformancenew.streamlit.app/
+
 ## Approach
 1. **EDA** — explored grade distribution, correlations between lifestyle/academic
    features and final grade, and the relationship between study time / absences
