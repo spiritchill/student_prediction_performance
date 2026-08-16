@@ -1,6 +1,9 @@
 import streamlit as st
 import pandas as pd
-import joblib
+import numpy as np
+from sklearn.preprocessing import LabelEncoder, StandardScaler
+from sklearn.linear_model import LinearRegression
+from sklearn.ensemble import RandomForestClassifier
 
 st.set_page_config(
     page_title="Student Performance Predictor",
@@ -10,11 +13,29 @@ st.set_page_config(
 
 @st.cache_resource
 def load_artifacts():
-    reg_model = joblib.load("models/best_regressor.pkl")
-    clf_model = joblib.load("models/best_classifier.pkl")
-    scaler = joblib.load("models/scaler.pkl")
-    encoders = joblib.load("models/encoders.pkl")
-    feature_cols = joblib.load("models/feature_cols.pkl")
+    df = pd.read_csv("data/student-mat.csv")
+
+    data = df.copy()
+    if "pass" not in data.columns:
+        data["pass"] = (data["G3"] >= 10).astype(int)
+
+    cat_cols = data.select_dtypes(include="object").columns.tolist()
+    encoders = {}
+    for col in cat_cols:
+        le = LabelEncoder()
+        data[col] = le.fit_transform(data[col])
+        encoders[col] = le
+
+    feature_cols = [c for c in data.columns if c not in ["G3", "pass"]]
+    X = data[feature_cols]
+    y_reg = data["G3"]
+    y_clf = data["pass"]
+
+    scaler = StandardScaler()
+    X_scaled = scaler.fit_transform(X)
+
+    reg_model = LinearRegression().fit(X_scaled, y_reg)
+    clf_model = RandomForestClassifier(n_estimators=300, max_depth=8, random_state=42).fit(X, y_clf)
 
     return reg_model, clf_model, scaler, encoders, feature_cols
 
